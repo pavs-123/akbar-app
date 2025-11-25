@@ -1,25 +1,21 @@
 ---
-- name: deploy angular build
+- name: first playbook
   hosts: all
   become: yes
-
   tasks:
-    - name: install httpd
+    - name: install httpd software
       yum:
         name: httpd
         state: latest
-
-    - name: start httpd
+    - name: start web server
       service:
         name: httpd
         state: started
-
-    - name: copy angular build
+    - name: copying the files
       copy:
-        src: /var/lib/jenkins/workspace/Deploying Scalable/dist/akbar-app
+        src: /var/lib/jenkins/workspace/Deploying Scalable/dist/akbar-app/
         dest: /var/www/html/
-
-    - name: restart webserver
+    - name: restart server
       service:
         name: httpd
         state: restarted
