@@ -1,0 +1,25 @@
+---
+- name: deploy angular build
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: install httpd
+      yum:
+        name: httpd
+        state: latest
+
+    - name: start httpd
+      service:
+        name: httpd
+        state: started
+
+    - name: copy angular build
+      copy:
+        src: /var/lib/jenkins/workspace/deploy-angular-app-ansible/dist/akbar-app
+        dest: /var/www/html/
+
+    - name: restart webserver
+      service:
+        name: httpd
+        state: restarted
