@@ -2,33 +2,24 @@ pipeline {
     agent any
 
     stages {
-
-        stage('SCM-1') {
+        stage('SCM') {
             steps {
-                git 'https://github.com/pavs-123/akbar-app.git'
+                git 'https://github.com/classes-101/akbar-app.git'
             }
         }
-
         stage('install') {
             steps {
                 sh 'npm install'
             }
         }
-
         stage('build') {
             steps {
                 sh 'npm run build --prod'
             }
         }
-
-        stage('anisible-deploy') {
+        stage('ansible-deploy') {
             steps {
-                ansiblePlaybook become: true,
-                                credentialsId: '289c6730-9dd7-4095-a769-66c187a186ef',
-                                disableHostKeyChecking: true,
-                                inventory: 'host.inv1',
-                                playbook: 'play.deploy1.yml',
-                                vaultTmpPath: ''
+                ansiblePlaybook become: true, credentialsId: 'b88c130d-a65e-4adb-ae97-fc78816d7c5b', disableHostKeyChecking: true, inventory: 'host.inv', playbook: 'play-deploy.yml'
             }
         }
     }
